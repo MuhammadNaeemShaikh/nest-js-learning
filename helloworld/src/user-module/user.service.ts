@@ -7,6 +7,7 @@ export class UserService {
     private users: User[] = []
 
     getUser(): User[] {
+        // throw new NotFoundException('Not Found')
         return this.users;
     }
 
