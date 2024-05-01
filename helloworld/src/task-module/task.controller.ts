@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TaskService } from "./task.service";
 import { Task } from "./interface/task";
-import { DltTaskDto, TaskDto } from "./dto/task.dto";
+import { GetSpecificTask, TaskDto } from "./dto/task.dto";
+import { ApiBody, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('task') //for swagger 
 @Controller('task')
 export class TaskController {
     constructor(private readonly taskService: TaskService) { }
@@ -11,7 +13,7 @@ export class TaskController {
     @Get('')
     async getTasks(): Promise<Task[]> {
         try {
-            return this.taskService.getTasks()
+            return this.taskService.getTasks();
         } catch (err) {
             throw err;
         }
@@ -20,6 +22,7 @@ export class TaskController {
 
     @Post('')
     @UsePipes(new ValidationPipe())
+    @ApiBody({ type: TaskDto })
     async addTask(@Body() task: TaskDto): Promise<Task> {
         try {
             return this.taskService.addTask(task);
@@ -29,13 +32,14 @@ export class TaskController {
         }
     }
 
+
     @Get(':id')
     @UsePipes(new ValidationPipe())
-    async getTask(@Param() params: DltTaskDto): Promise<Task> {
+    async getTask(@Param() params: GetSpecificTask): Promise<Task> {
         try {
-            return this.taskService.getTask(params.id)
-        } catch (error) {
-            throw error;
+            return this.taskService.getTask(params.id);
+        } catch (err) {
+            throw err;
         }
     }
 }

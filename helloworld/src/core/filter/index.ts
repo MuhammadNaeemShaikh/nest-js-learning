@@ -12,8 +12,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
         // Check if the message is an object and extract the message property
         const errorMessage = typeof message === 'string' ? message : message.message;
 
-        console.log(message);
-
         response
             .status(status)
             .json({
