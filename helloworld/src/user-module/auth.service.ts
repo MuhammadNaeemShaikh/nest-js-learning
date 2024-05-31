@@ -88,4 +88,16 @@ export class AuthService {
       throw new UserException(statusCode.INTERNAL_ERROR, error.message);
     }
   }
+
+  async getUser(userId: string): Promise<any> {
+    try {
+      const user = await this.userModel.findById(userId).exec();
+      if (!user) {
+        throw new UserException(statusCode.NOT_FOUND, 'User not found');
+      }
+      return user;
+    } catch (error) {
+      throw new UserException(statusCode.INTERNAL_ERROR, error.message);
+    }
+  }
 }
