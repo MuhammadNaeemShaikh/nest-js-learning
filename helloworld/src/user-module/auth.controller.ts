@@ -1,52 +1,56 @@
-import { Body, Controller, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { UserDto, loginDto } from './dto/auth.dto';
 import { SignUp, loginReturnType } from './interface/user.interface';
 import { UserGuard } from 'src/core/guard';
+import { Roles } from 'src/core/decorator/roles.decorator';
+import { RoleEnum } from 'src/core/enum/index.enum';
 
 @ApiTags('auth')
 @Controller('auth')
 export class UserController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('signUp')
   @UsePipes(new ValidationPipe())
   @ApiBody({})
   async addUser(@Body() user: UserDto): Promise<SignUp> {
     try {
-      return this.authService.createUser(user)
+      return this.authService.createUser(user);
     } catch (error) {
       throw error;
     }
   }
 
   @Post('login')
-  @UseGuards(UserGuard)
   @UsePipes(new ValidationPipe())
   @ApiBody({})
   async login(@Body() data: loginDto): Promise<loginReturnType> {
     try {
-      return this.authService.login(data)
+      return this.authService.login(data);
     } catch (error) {
       throw error;
     }
   }
 
-  @Get('getUser')
+  @Get('')
+  @Roles(RoleEnum.USER)
   @UseGuards(UserGuard)
-  async getUser(@Req() req) {
+  async getUser(@Req() req): Promise<any> {
     try {
-      console.log('hit');
-      const userId = await req.user._id;
-
-      console.log(userId, '------------------');
+      const userId = req.user._id;
       // Now, use the UserService to fetch the user details by ID
-      // const user = await this.authService.getUser(userId);
-
-      // Return the user details
-      // return userId;
-
+      return this.authService.getUser(userId);
     } catch (error) {
       throw error;
     }

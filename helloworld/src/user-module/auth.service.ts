@@ -11,8 +11,8 @@ import { JwtService } from './jwt.service';
 export class AuthService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<SignUp>,
-    private jwtService: JwtService
-  ) { }
+    private jwtService: JwtService,
+  ) {}
 
   public async createUser(data: SignUp): Promise<SignUp> {
     try {
@@ -38,8 +38,7 @@ export class AuthService {
       const salt = await bcrypt.genSalt();
 
       //hash password
-      const hashPassword = await bcrypt.hash(password, salt)
-
+      const hashPassword = await bcrypt.hash(password, salt);
 
       return await this.userModel.create({
         firstName,
@@ -52,7 +51,6 @@ export class AuthService {
         description,
         profile,
       });
-
     } catch (error) {
       throw new UserException(500, error.message);
     }
@@ -60,11 +58,10 @@ export class AuthService {
 
   public async login(data: login): Promise<loginReturnType> {
     try {
-
       const { userEmail, password } = data;
 
       //check email found or not
-      const isEmailFound = await this.userModel.findOne({ email: userEmail })
+      const isEmailFound = await this.userModel.findOne({ email: userEmail });
 
       if (!isEmailFound) {
         throw new UserException(statusCode.BAD_REQUEST, 'Email Not Found');
@@ -78,12 +75,11 @@ export class AuthService {
         throw new UserException(statusCode.BAD_REQUEST, 'Password Not Matched');
       }
 
-      const { _id, email, role } = isEmailFound
+      const { _id, email, role } = isEmailFound;
 
       return {
         accessToken: await this.jwtService.signature({ _id, email, role }),
-      }
-
+      };
     } catch (error) {
       throw new UserException(statusCode.INTERNAL_ERROR, error.message);
     }
@@ -91,7 +87,7 @@ export class AuthService {
 
   async getUser(userId: string): Promise<any> {
     try {
-      const user = await this.userModel.findById(userId).exec();
+      const user = await this.userModel.findOne({ _id: userId }).exec();
       if (!user) {
         throw new UserException(statusCode.NOT_FOUND, 'User not found');
       }

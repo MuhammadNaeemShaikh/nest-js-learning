@@ -8,11 +8,11 @@ import { createDocument } from './swagger/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-  app.useGlobalFilters(new HttpExceptionFilter)
+  app.useGlobalFilters(new HttpExceptionFilter());
   // app.use(csurf());
 
   app.setGlobalPrefix('/api/v1');
-  SwaggerModule.setup('api', app, createDocument(app))
+  SwaggerModule.setup('api', app, createDocument(app));
 
   await app.listen(3000);
 }

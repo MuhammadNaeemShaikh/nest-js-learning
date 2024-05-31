@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
 import { signature, signatureData } from "./interface/user.interface";
 import * as jwt from 'jsonwebtoken'
 
