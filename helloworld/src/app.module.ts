@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
@@ -9,6 +9,7 @@ import { AuthModule } from './user-module/auth.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { consumers } from 'stream';
 import { CsrfMiddleware } from './core/middleware/csrf.middlware';
+import { LoggerMiddleware } from './core/middleware';
 
 @Module({
   imports: [TaskModule, DatabaseModule, AuthModule, ThrottlerModule.forRoot([{
@@ -28,6 +29,14 @@ import { CsrfMiddleware } from './core/middleware/csrf.middlware';
 
   ],
 })
-export class AppModule {
-
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .exclude(
+        { path: 'auth/login', method: RequestMethod.POST }, // Exclude GET /health
+        { path: 'auth/signUp', method: RequestMethod.POST }, // Exclude GET /status
+      )
+      .forRoutes('*'); // Applies the middleware to all routes
+  }
 }
