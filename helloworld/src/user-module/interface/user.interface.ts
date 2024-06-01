@@ -29,3 +29,16 @@ export interface signatureData {
 export interface loginReturnType {
   accessToken: signature
 }
+
+export interface getUserReturnType {
+  _id: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  role: string,
+  dob: string,
+  address: string,
+  description: string,
+  profile: string,
+}
