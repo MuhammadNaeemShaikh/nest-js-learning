@@ -1,11 +1,6 @@
 // let message = "hello";
 // message = 3;
 
-import { rejects } from 'assert';
-import { error } from 'console';
-import { get } from 'http';
-import { resolve } from 'path';
-
 // console.log(message);
 
 //strongly typed syntax
@@ -1579,14 +1574,83 @@ import { resolve } from 'path';
 
 // SELECT name,course_name,age FROM student INNER JOIN course ON student.id = course.student_id;
 
-
 //                                                                 outer join
 // LEFT JOIN
-// return completes a data table
+
+// return all records from the left table and the matched records from the right table
+
+// syntax
+// SELECT coulmn(s)
+// FROM tableA
+// LEFT JOIN tableB
+// ON tableA.col_name = tableB.col_name;
+
+// EXAMPLE
+// CREATE TABLE student(
+//     id INT PRIMARY KEY,
+//     name VARCHAR(50),
+//     age INT NOT NULL);
+
+//     CREATE TABLE course(
+//         id INT PRIMARY KEY,
+//         course_name VARCHAR(30) NOT NULL,
+//         student_id INT,
+//         FOREIGN KEY (student_id) REFERENCES student(id)
+//     );
+
+//     INSERT INTO student (id,name,age) VALUES (1,'john',23),(2,'rafay',34),(3,'bilal',44);
+//     INSERT INTO course (id,course_name,student_id) VALUES(1,'PHP',1),(2,'JAVA',2),(3,'JS',1);
+
+// SELECT * FROM student as s RIGHT JOIN course as c ON s.id = c.student_id;
+
+// SELECT course_name FROM student as s RIGHT JOIN course as c ON s.id = c.student_id;
+
 // RIGHT JOIN
-// return completes b data table
+
+// return all records from the right table and the matched records from the left table
+
+// EXAMPLE
+
+// CREATE TABLE student(
+//     id INT PRIMARY KEY,
+//     name VARCHAR(50),
+//     age INT NOT NULL);
+
+//     CREATE TABLE course(
+//         id INT PRIMARY KEY,
+//         course_name VARCHAR(30) NOT NULL,
+//         student_id INT,
+//         FOREIGN KEY (student_id) REFERENCES student(id)
+//     );
+
+//     INSERT INTO student (id,name,age) VALUES (1,'john',23),(2,'rafay',34),(3,'bilal',44);
+//     INSERT INTO course (id,course_name,student_id) VALUES(1,'PHP',1),(2,'JAVA',2),(3,'JS',1);
+
+// SELECT * FROM student as s RIGHT JOIN course as c ON s.id = c.student_id;
 
 // FULL JOIN
+// return all records from the left table and right table
+
+// EXAMPLE
+
+// CREATE TABLE student(
+//     id INT PRIMARY KEY,
+//     name VARCHAR(50),
+//     age INT NOT NULL);
+
+//     CREATE TABLE course(
+//         id INT PRIMARY KEY,
+//         course_name VARCHAR(30) NOT NULL,
+//         student_id INT,
+//         FOREIGN KEY (student_id) REFERENCES student(id)
+//     );
+
+//     INSERT INTO student (id,name,age) VALUES (1,'john',23),(2,'rafay',34),(3,'bilal',44);
+//     INSERT INTO course (id,course_name,student_id) VALUES(1,'PHP',1),(2,'JAVA',2),(3,'JS',1);
+
+// SELECT * FROM student as s LEFT JOIN course as c ON s.id = c.student_id
+// UNION 
+// SELECT * FROM student as s RIGHT JOIN course as c ON s.id = c.student_id;
 
 // <----------------------------------------------- Join in Sql ------------------------------------------------------------------------>
 
