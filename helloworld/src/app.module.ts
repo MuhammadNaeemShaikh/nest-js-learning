@@ -6,13 +6,16 @@ import {
 } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './core/filter';
 import { TaskModule } from './task-module/task.module';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './user-module/auth.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerMiddleware } from './core/middleware';
+import { GlobalResponseInterceptor } from './core/Interceptor/GlobalResponse.interceptor';
+import { ChatGateway } from './sockets/events.gateway';
+import { RoomDetailsService } from './sockets/roomdetails.service';
 
 @Module({
   imports: [
@@ -34,11 +37,18 @@ import { LoggerMiddleware } from './core/middleware';
       useClass: HttpExceptionFilter,
     },
     {
+      provide: APP_INTERCEPTOR,
+      useClass: GlobalResponseInterceptor,
+    },
+    {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    ChatGateway,
+    RoomDetailsService,
   ],
 })
+
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer

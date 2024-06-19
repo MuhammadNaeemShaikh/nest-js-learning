@@ -11,15 +11,15 @@ import {
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { UserDto, loginDto } from './dto/auth.dto';
-import { SignUp, loginReturnType } from './interface/user.interface';
-import { UserGuard } from 'src/core/guard';
+import { SignUp, getUserReturnType, loginReturnType } from './interface/user.interface';
+import { AuthGuard } from 'src/core/guard';
 import { Roles } from 'src/core/decorator/roles.decorator';
 import { RoleEnum } from 'src/core/enum/index.enum';
 
 @ApiTags('auth')
 @Controller('auth')
 export class UserController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('signUp')
   @UsePipes(new ValidationPipe())
@@ -43,10 +43,10 @@ export class UserController {
     }
   }
 
-  @Get('')
+  @Get('getUser')
   @Roles(RoleEnum.USER)
-  @UseGuards(UserGuard)
-  async getUser(@Req() req): Promise<any> {
+  @UseGuards(AuthGuard)
+  async getUser(@Req() req): Promise<getUserReturnType> {
     try {
       const userId = req.user._id;
       // Now, use the UserService to fetch the user details by ID
@@ -55,13 +55,4 @@ export class UserController {
       throw error;
     }
   }
-  //   @ApiBody({ type: TaskDto })
-  //   @UsePipes(new ValidationPipe())
-  //   async addTask(@Body() task: TaskDto): Promise<Task> {
-  //     try {
-  //       return this.taskService.addTask(task);
-  //     } catch (err) {
-  //       throw err;
-  //     }
-  //   }
 }
