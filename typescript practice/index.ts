@@ -992,20 +992,22 @@
 // console.log(duplicates); // Output: "LE"
 
 // function findDuplicate(inputString: string) {
-//   let duplicates = ''
-//   let seenCharacters: any = {}
-
-//   for (let char of inputString) {
-//     if (seenCharacters[char]) {
-//       duplicates += char
+//     let duplicates: string = '';
+//     let seenCharacters: any = {};
+  
+//     for (let i = 0; i < inputString.length; i++) {
+//       const char = inputString[i];
+//       if (seenCharacters[char]) {
+//         if (!duplicates.includes(char)) {
+//           duplicates += char;
+//         }
+//       } else {
+//         seenCharacters[char] = true;
+//       }
 //     }
-//     else {
-//       seenCharacters[char] = true
-//     }
+  
+//     return duplicates;
 //   }
-
-//   return duplicates;
-// }
 
 // console.log(findDuplicate('LEVELLE'));
 

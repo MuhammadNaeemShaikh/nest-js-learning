@@ -1,7 +1,6 @@
 "use strict";
 // let message = "hello";
 // message = 3;
-Object.defineProperty(exports, "__esModule", { value: true });
 // console.log(message);
 //strongly typed syntax
 // let a: string = 'hi';
@@ -712,18 +711,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // const duplicates = findDuplicates(inputString);
 // console.log(duplicates); // Output: "LE"
 // function findDuplicate(inputString: string) {
-//   let duplicates = ''
-//   let seenCharacters: any = {}
-//   for (let char of inputString) {
-//     if (seenCharacters[char]) {
-//       duplicates += char
+//     let duplicates: string = '';
+//     let seenCharacters: any = {};
+//     for (let i = 0; i < inputString.length; i++) {
+//       const char = inputString[i];
+//       if (seenCharacters[char]) {
+//         if (!duplicates.includes(char)) {
+//           duplicates += char;
+//         }
+//       } else {
+//         seenCharacters[char] = true;
+//       }
 //     }
-//     else {
-//       seenCharacters[char] = true
-//     }
+//     return duplicates;
 //   }
-//   return duplicates;
-// }
 // console.log(findDuplicate('LEVELLE'));
 // Question: Write a program to print a right-angled triangle pattern.
 // for (let i = 0; i < 5; i++) {
@@ -817,131 +818,348 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //   console.log(space.repeat(n - i) + str.repeat(i * 2 - 1));
 // }
 // <----------------------------------------------- Random Question ----------------------------------------------------------------->
-// <-----------------------------------------------  JOIN ------------------------------------------------------------------------>
-// <----------------------------------------------- SQL JOIN ------------------------------------------------------------------------>
-// A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
-// Let's look at a selection from the "Orders" table:
-// OrderID	CustomerID	OrderDate
-// 10308	2	1996 -09 - 18
-// 10309	37	1996 -09 - 19
-// 10310	77	1996 -09 - 20
-// Then, look at a selection from the "Customers" table:
-// CustomerID	CustomerName	ContactName	Country
-// 1	Alfreds Futterkiste	Maria Anders	Germany
-// 2	Ana Trujillo Emparedados y helados	Ana Trujillo	Mexico
-// 3	Antonio Moreno Taquería	Antonio Moreno	Mexico
-// Notice that the "CustomerID" column in the "Orders" table refers to the "CustomerID" in the "Customers" table.The relationship between the two tables above is the "CustomerID" column.
-//   Then, we can create the following SQL statement(that contains an INNER JOIN), that selects records that have matching values in both tables:
-// SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
-// FROM Orders
-// INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
-// <----------------------------------------------- SQL JOIN ------------------------------------------------------------------------>
-// <----------------------------------------------- LEFT JOIN ------------------------------------------------------------------------>
-// SQL LEFT JOIN Keyword
-// The LEFT JOIN keyword returns all records from the left table (table1), and the matching records from the right table (table2).
-//  The result is 0 records from the right side, if there is no match.
-// LEFT JOIN Syntax
-// Demo Database
-// In this tutorial we will use the well - known Northwind sample database.
-// Below is a selection from the "Customers" table:
-// CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
-// 1
-// Alfreds Futterkiste	Maria Anders	Obere Str. 57	Berlin	12209	Germany
-// 2	Ana Trujillo Emparedados y helados	Ana Trujillo	Avda.de la Constitución 2222	México D.F.	05021	Mexico
-// 3	Antonio Moreno Taquería	Antonio Moreno	Mataderos 2312	México D.F.	05023	Mexico
-// And a selection from the "Orders" table:
-// OrderID	CustomerID	EmployeeID	OrderDate	ShipperID
-// 10308	2	7	1996 -09 - 18	3
-// 10309	37	3	1996 -09 - 19	1
-// 10310	77	8	1996 -09 - 20	2
-// SQL LEFT JOIN Example
-// The following SQL statement will select all customers, and any orders they might have:
-// ExampleGet your own SQL Server
-// SELECT Customers.CustomerName, Orders.OrderID
-// FROM Customers
-// LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
-// ORDER BY Customers.CustomerName;
-// <----------------------------------------------- LEFT JOIN ------------------------------------------------------------------------>
-// <----------------------------------------------- Right JOIN ------------------------------------------------------------------------>
-// The RIGHT JOIN keyword returns all records from the right table (table2), and the matching records from the left table (table1).
-//  The result is 0 records from the left side, if there is no match.
-// Demo Database
-// In this tutorial we will use the well - known Northwind sample database.
-// Below is a selection from the "Orders" table:
-// OrderID	CustomerID	EmployeeID	OrderDate	ShipperID
-// 10308	2	7	1996 -09 - 18	3
-// 10309	37	3	1996 -09 - 19	1
-// 10310	77	8	1996 -09 - 20	2
-// And a selection from the "Employees" table:
-// EmployeeID	LastName	FirstName	BirthDate	Photo
-// 1	Davolio	Nancy	12 / 8 / 1968	EmpID1.pic
-// 2	Fuller	Andrew	2 / 19 / 1952	EmpID2.pic
-// 3	Leverling	Janet	8 / 30 / 1963	EmpID3.pic
-// SQL RIGHT JOIN Example
-// The following SQL statement will return all employees, and any orders they might have placed:
-// ExampleGet your own SQL Server
-// SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
-// FROM Orders
-// RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
-// ORDER BY Orders.OrderID;
-// <----------------------------------------------- Right JOIN ------------------------------------------------------------------------>
-// <----------------------------------------------- Full Outer JOIN ------------------------------------------------------------------------>
-// SQL FULL OUTER JOIN Keyword
-// The FULL OUTER JOIN keyword returns all records when there is a match in left (table1) or right (table2) table records.
-// Tip: FULL OUTER JOIN and FULL JOIN are the same.
-// Demo Database
-// In this tutorial we will use the well-known Northwind sample database.
-// Below is a selection from the "Customers" table:
-// CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
-// 1
-// Alfreds Futterkiste	Maria Anders	Obere Str. 57	Berlin	12209	Germany
-// 2	Ana Trujillo Emparedados y helados	Ana Trujillo	Avda. de la Constitución 2222	México D.F.	05021	Mexico
-// 3	Antonio Moreno Taquería	Antonio Moreno	Mataderos 2312	México D.F.	05023	Mexico
-// And a selection from the "Orders" table:
-// OrderID	CustomerID	EmployeeID	OrderDate	ShipperID
-// 10308	2	7	1996-09-18	3
-// 10309	37	3	1996-09-19	1
-// 10310	77	8	1996-09-20	2
-// ADVERTISEMENT
-// SQL FULL OUTER JOIN Example
-// The following SQL statement selects all customers, and all orders:
-// SELECT Customers.CustomerName, Orders.OrderID
-// FROM Customers
-// FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
-// ORDER BY Customers.CustomerName;
-// <----------------------------------------------- Full Outer JOIN ------------------------------------------------------------------------>
-//<------------------------------------------------ Normalization -------------------------------------------------------------------------->
-// What is Normalization?
-// Normalization is the process of organizing the data in the database.
-// Normalization is used to minimize the redundancy from a relation or set of relations. It is also used to eliminate undesirable characteristics like Insertion, Update, and Deletion Anomalies.
-// Normalization divides the larger table into smaller and links them using relationships.
-// The normal form is used to reduce redundancy from the database table.
-// Why do we need Normalization?
-// The main reason for normalizing the relations is removing these anomalies. Failure to eliminate anomalies leads to data redundancy and can cause data integrity and other problems as the database grows. Normalization consists of a series of guidelines that helps to guide you in creating a good database structure.
-// Pause
-// Next
-// Mute
-// Current TimeÂ 
-// 0:01
-// /
-// DurationÂ 
-// 18:10
-// Â 
-// Fullscreen
-// Data modification anomalies can be categorized into three types:
-// Insertion Anomaly: Insertion Anomaly refers to when one cannot insert a new tuple into a relationship due to lack of data.
-// Deletion Anomaly: The delete anomaly refers to the situation where the deletion of data results in the unintended loss of some other important data.
-// Updatation Anomaly: The update anomaly is when an update of a single data value requires multiple rows of data to be updated.
-// Types of Normal Forms:
-// Normalization works through a series of stages called Normal forms. The normal forms apply to individual relations. The relation is said to be in particular normal form if it satisfies constraints.
-// Following are the various types of Normal forms:
-// DBMS Normalization
-// Normal Form	Description
-// 1NF	A relation is in 1NF if it contains an atomic value.
-// 2NF	A relation will be in 2NF if it is in 1NF and all non-key attributes are fully functional dependent on the primary key.
-// 3NF	A relation will be in 3NF if it is in 2NF and no transition dependency exists.
-// BCNF	A stronger definition of 3NF is known as Boyce Codd's normal form.
-// 4NF	A relation will be in 4NF if it is in Boyce Codd's normal form and has no multi-valued dependency.
-// 5NF	A relation is in 5NF. If it is in 4NF and does not contain any join dependency, joining should be lossless.
-//<------------------------------------------------ Normalization -------------------------------------------------------------------------->
-// <-----------------------------------------------  JOIN ------------------------------------------------------------------------>
+// <-----------------------------------------------  Data Base ------------------------------------------------------------------------>
+//Databse
+// Database is a collection of data in a format that can easily be accessed (digital.)
+// A software application is used to manage our db is called dbms
+// Types of Database
+// Relational   // non-Relational
+// MYSQL  // MONGO DB(NO SQL)
+//DAta stored in table // DAta not stored in table
+// SQL
+//Sql is a structured query langauage used to interact with relational databases.
+//it is used to perform crud operations.
+// 1.create
+// 2.update
+// 3.delete
+// 4.read
+// <----------------------------------------------- Create Data Base ------------------------------------------------------------------------>
+// Our first sql command
+//CREATE DATABASE db_name;
+//DROP DATABASE db_name;
+// <----------------------------------------------- Create Data Base ------------------------------------------------------------------------>
+// <----------------------------------------------- Use Data Base ------------------------------------------------------------------------>
+// <----------------------------------------------- Use Data Base ------------------------------------------------------------------------>
+//USE db_name;
+// <----------------------------------------------- Use Data Base ------------------------------------------------------------------------>
+// <----------------------------------------------- Creating  Table ------------------------------------------------------------------------>
+//CREATE TABLE table_name (
+// COLUMN_NAME1 DATATYPE CONSTRAINT,
+// COLUMN_NAME2 DATATYPE CONSTRAINT,
+// COLUMN_NAME3 DATATYPE CONSTRAINT,
+// );
+//CREATE TABLE STUDENT(
+//id  INT PRIMARY KEY,
+//name VARCHAR(50),
+// age INT NOT NULL
+// );
+// <----------------------------------------------- Creating  Table ------------------------------------------------------------------------>
+// <----------------------------------------------- Types of Sql Commands ------------------------------------------------------------------------>
+//DDL (Data Definition Langauage):create, alter,rename,truncate,drop
+//DQL (Data Query Language):Select
+//DML (Data Maniplation Language): insert,update,delete
+//DCL (Data Control Language): grant & revoke permission to users
+//TCL (Transaction Control Language): start transaction,commit ,rollback
+// <----------------------------------------------- Types of Sql Commands ------------------------------------------------------------------------>
+// <----------------------------------------------- Data Base Related Queries ------------------------------------------------------------------------>
+// CREATE DATABASE db_name;
+//CREATE DATABASE IF NOT EXISTS db_name
+//CREATE DATABASE IF NOT EXISTS college;
+//DROP DATABASE db_name;
+//DROP DATABASE IF EXISTS db_name;
+//SHOW DATABASES;
+//SHOW TABLES;
+// <----------------------------------------------- Data Base Related Queries ------------------------------------------------------------------------>
+// <----------------------------------------------- Table Related Queries ------------------------------------------------------------------------>
+// Create
+// CREATE TABLE table_name(
+// column_name1 datatype constraint,
+// column_name2 datatype constraint,(
+// )
+// CREATE TABLE student(
+// roll_no INT PRIMARY KEY, // not null, unique id
+// name VARCHAR(50)
+// );
+// Select * View All Coumns
+// SELECT * FROM table_name;
+// SELECT * FROM student;
+//Insert
+// INSERT INTO table_name
+// col_name1, col_name2;
+// VALUES(col_v1, col_v2),(col_v1, col_v2);
+//INSERT INTO student
+// (roll_no, name)VALUES
+// (101,'Karan'),
+// (102,'Arjun');
+//INSERT INTO student
+// VALUES
+// (101,'Karan'),
+// (102,'Arjun');
+// <----------------------------------------------- Table Related Queries ------------------------------------------------------------------------>
+// <----------------------------------------------- Keys ------------------------------------------------------------------------>
+// Primary Key
+// It is a column (or set of columns) in a table that uniquely identifies each row. (a unique id).There is only 1 PK & it should not be null.
+// FOREIGN KEY
+// A Foregin key is a column ( or set of columns) in a table that refers to the primary key in a table. There can be multiple FKs.
+// FKs can have duplicate &  null values.
+//table 1 city
+// id (PK) || city_name
+// 1 || Pune
+// 2 || Mumbai
+// 3 || Delhi
+// table 2 students
+// id (PK) || name || city_id (FK)
+// 101 || Karan || 1
+// 101 || John || 3
+// 101 || Ibrahim || 2
+// <----------------------------------------------- Keys ------------------------------------------------------------------------>
+// <----------------------------------------------- Constraint ------------------------------------------------------------------------>
+// SQL CONSTRAINTS ARE USED TO SPECIFY RULES FOR DATA IN A TABLE.
+// NOT NULL columns cannot have a null value col1 int NOT NULL
+// UNIQUE all values in column are different col2 int UNIQUE
+// PRIMARY KEY makes a column unique & not null but used only for one.
+// id int PRIMARY KEY
+// CREATE TABLE temp(
+//     id INT NOT null,
+//     PRIMARY KEY (id)
+// )
+//FOREIGN KEY prevents actions that would destroy links between tables
+// CREATE TABLE temp (
+//     cust_id INT FOREIGN KEY(cust_id) references customer(id)
+// );
+// DEFAULT sets the default value of a column
+// salary INT DEFAULT 50000
+//CHECK
+//Check it can limit the values allowed in the column
+// CREATE TABLE city (
+// id INT PRIMARY KEY,
+// city VARCHAR (50),
+// age INT,
+// CONSTRAINT age_check CHECK (age>=18 AND city = "Delhi")
+// )
+// <----------------------------------------------- Constraint ------------------------------------------------------------------------>
+// <----------------------------------------------- SELECT IN  DETAIL ------------------------------------------------------------------------>
+//used to select any data from the database
+// Basic Syntax
+// SELECT col1,col2 FROM table_name;
+// to Select ALL
+// SELECT * FROM table_name;
+// <----------------------------------------------- SELECT IN  DETAIL ------------------------------------------------------------------------>
+// <----------------------------------------------- WHERE CLAUSE ------------------------------------------------------------------------>
+// to define some conditions
+// SELECT col1,col2 FROM table_name WHERE conditions;
+// SELECT * FROM student WHERE marks > 80;
+// SELECT * FROM student WHERE city = 'Mumbai';
+// Using Operators in Where
+// Arithmetic Operators: +(addition),-(substraction),*(multiplication),/(division),%modulus
+//Comparision Operators: = (equal to), !=(not equal to),>,>=,<,<=
+// Logical Operator: AND , OR NOT, IN , BETWEEN , ALL , LIKE ,ANY
+// BITWIESE OPERATOR: & (Bitwise AND), | (Bitwise OR)
+// SELECT * FROM student WHERE marks+10 >100;
+// AND (to check for both conditions to be true)
+// SELECT * FROM student WHERE marks>80 AND city = "Mumbai";
+// OR (to check for one of condition to be true)
+// SELECT * FROM student WHERE marks > 90 OR city = "Mumbai";
+// BETEWEEN (selects for a given range)
+//  SELECT  * FROM student WHERE marks BETWEEN 80 AND 90;
+// In (matches any value in the list)
+// SELECT * FROM student WHERE city IN ("DELHI","MUMBAI");
+// NOT (to negate the given conditions);
+// SELECT * FROM student WHERE city NOT IN ("Delhi","Mumabi")
+// <----------------------------------------------- WHERE CLAUSE ------------------------------------------------------------------------>
+// <----------------------------------------------- LIMIT CLAUSE ------------------------------------------------------------------------>
+// sets an upper limit on number of (tuples) rows to be returned
+// SELECT * FROM student LIMIT 3;
+// SELECT col1,col2 FROM table_name LIMIT number;
+// <----------------------------------------------- LIMIT CLAUSE ------------------------------------------------------------------------>
+// <----------------------------------------------- ORDER BY CLAUSE ------------------------------------------------------------------------>
+// to sort in ascending(ASC) or descending order (DESC)
+// SELECT * FROM student ORDER BY city ASC;
+// SELECT col1,col2 FROM table_name ORDER BY col_name(s) ASC;
+// <----------------------------------------------- ORDER BY CLAUSE ------------------------------------------------------------------------>
+// <----------------------------------------------- AGGREGATE FUNCTION ------------------------------------------------------------------------>
+// Aggregate functions perform a calculation on a set of values, and return a single value.
+// COUNT()
+// MAX()
+// MIN()
+// SUM()
+// AVG()
+// GET MAXIMUM MARKS
+// SELECT max(marks) FROM student;
+// GET AVERAGE MARKS
+// SELECT avg(marks) FROM student;
+// GET STUDENT COUNT
+// SELECT COUNT(id) FROM student;
+// <----------------------------------------------- AGGREGATE FUNCTION ------------------------------------------------------------------------>
+// <----------------------------------------------- GROUP BY CLAUSE ------------------------------------------------------------------------>
+// Group rows that have the same values into summary rows.
+// It collects data from multiple records and groups the result by one or more columns.
+// Generally we use group by with some aggregate function.
+// Count number of student in each city
+// SELECT city, COUNT (name) FROM student  GROUP BY city;
+// write the qurey to find average marks in each city
+// SELECT city , avg(marks) FROM student group by city order by city;
+// For the given table,find the total payment according to each payment method
+// customer_id  , customer  , mode , city
+// 101, Olivia Barlete , Net Banking  Protland
+// 102 , John ,Credit Card , Miami
+// 103 , Abraham , Debit Card, florida
+// 104, Olivia Barlete , Net Banking  Protland
+// 105, Olivia Barlete , Net Banking  Protland
+// 106 , Abraham , Debit Card, florida
+// 107 , Abraham , Debit Card, florida
+// 108 , John ,Credit Card , Miami
+// 109 , John ,Credit Card , Miami
+// SELECT mode , count(customer_id) From customer
+// GROUP BY mode;
+// <----------------------------------------------- GROUP BY CLAUSE ------------------------------------------------------------------------>
+// <----------------------------------------------- HAVING CLAUSE ------------------------------------------------------------------------>
+// Similar to Where i.e applies some conditions on rows. Used When we want to apply any condition after grouping.
+// Count number of students in each city where max marks cross 90;
+// SELECT count(name),city
+// From student
+// GORUP BY city
+// HAVING max(marks) >90;
+// <----------------------------------------------- HAVING CLAUSE ------------------------------------------------------------------------>
+// <----------------------------------------------- General Ordeer ------------------------------------------------------------------------>
+// SELECT coumn(s)
+// From table_name
+// Where condition
+// GROUP BY coumn(s)
+// HAVING condition
+// ORDER BY coumn(s) ASC;
+// <----------------------------------------------- General Ordeer ------------------------------------------------------------------------>
+// <----------------------------------------------- Table Related Quries ------------------------------------------------------------------------>
+// to off safe mode
+// SET SQL_SAFE_UPDATES = 0;
+// Update  (to update existing rows)
+// UPDATE table_name SET col1 = val1, col2 = val2 WHERE condition;
+// UPDATE student SET grade = "O" WHERE GRADE = "A";
+// Delete (to delete existing rows)
+// DELTE FROM table_name
+// WHERE condition
+// DELETE FROM student WHRE marks < 33;
+// <----------------------------------------------- Table Related Quries ------------------------------------------------------------------------>
+// <----------------------------------------------- Foriegn Keys ------------------------------------------------------------------------>
+// dept
+// id  , name
+// 101 , science
+// 102 , english
+// 103 , hindi
+// teacher
+// id  ,  name , dept_id
+// 1 ,    john ,  101
+// 2 ,    john ,  102
+// 3 ,    john ,  103
+// <----------------------------------------------- Foriegn Keys ------------------------------------------------------------------------>
+// <----------------------------------------------- cascading for Foriegn Keys ------------------------------------------------------------------------>
+// On Delete Cascade
+// When  we create a foriegn key using this option, it deletes the referencing rows in a child table when the referenced row deleted in the
+// parent table which has a primary key.
+// On Update Cascade
+// When we create a foreign key using update cascade the referencing rows are updated in the child table when the referenced row is updated
+// in the parent table which has a primary key.
+// CREATE TABLE student (
+// id INT PRIMARY KEY,
+// course_id INT NOT null,
+// FOREIGN KEY (course_id) references COURSE (id)
+// ON DELETE CASCADE
+// ON UPDATE CASCADE
+// )
+// <----------------------------------------------- cascading for Foriegn Keys ------------------------------------------------------------------------>
+// <----------------------------------------------- Table Related Quries ------------------------------------------------------------------------>
+// Alter (to change the schema)
+// ADD COLUMN
+// ALTER TABLE table_name
+// ADD COLUMN coumn_name datatype constraint;
+// DROP COLUMN
+// ALTER TABLE table_name
+// DROP COLUMN column_name;
+// RENAME TABLE
+// ALTER TABLE table_name
+// RENAME TO table_name;
+// <----------------------------------------------- Table Related Quries ------------------------------------------------------------------------>
+// <----------------------------------------------- Join in Sql ------------------------------------------------------------------------>
+// Join is used to combine rows from two or more tables, based on a related column between them.
+// employee                                         ||                      SALARY
+// id , name                                        ||                      id , salary , employee_id
+// 1  , john                                        ||                      1  , 1000   , 1
+// 2  , rafay                                       ||                      2  , 2000   , 2
+// <----------------------------------------------- TYPES OF Join (VEN DIAGRAM)  ------------------------------------------------------------------------>
+// INNER JOIN
+// Return Record that have matching values in both table.
+// Syntax
+// SELECT coumn(s) FROM tableA INNER JOIN tableB ON tableA.col_name = tableB.col_name;
+// EXAMPLE
+// CREATE TABLE student(
+//     id INT PRIMARY KEY,
+//     name VARCHAR(50),
+//     age INT NOT NULL);
+//     CREATE TABLE course(
+//         id INT PRIMARY KEY,
+//         course_name VARCHAR(30) NOT NULL,
+//         student_id INT,
+//         FOREIGN KEY (student_id) REFERENCES student(id)
+//     );
+//     INSERT INTO student (id,name,age) VALUES (1,'john',23),(2,'rafay',34),(3,'bilal',44);
+//     INSERT INTO course (id,course_name,student_id) VALUES(1,'PHP',1),(2,'JAVA',2),(3,'JS',1);
+// SELECT name,course_name,age FROM student INNER JOIN course ON student.id = course.student_id;
+//                                                                 outer join
+// LEFT JOIN
+// return all records from the left table and the matched records from the right table
+// syntax
+// SELECT coulmn(s)
+// FROM tableA
+// LEFT JOIN tableB
+// ON tableA.col_name = tableB.col_name;
+// EXAMPLE
+// CREATE TABLE student(
+//     id INT PRIMARY KEY,
+//     name VARCHAR(50),
+//     age INT NOT NULL);
+//     CREATE TABLE course(
+//         id INT PRIMARY KEY,
+//         course_name VARCHAR(30) NOT NULL,
+//         student_id INT,
+//         FOREIGN KEY (student_id) REFERENCES student(id)
+//     );
+//     INSERT INTO student (id,name,age) VALUES (1,'john',23),(2,'rafay',34),(3,'bilal',44);
+//     INSERT INTO course (id,course_name,student_id) VALUES(1,'PHP',1),(2,'JAVA',2),(3,'JS',1);
+// SELECT * FROM student as s RIGHT JOIN course as c ON s.id = c.student_id;
+// SELECT course_name FROM student as s RIGHT JOIN course as c ON s.id = c.student_id;
+// RIGHT JOIN
+// return all records from the right table and the matched records from the left table
+// EXAMPLE
+// CREATE TABLE student(
+//     id INT PRIMARY KEY,
+//     name VARCHAR(50),
+//     age INT NOT NULL);
+//     CREATE TABLE course(
+//         id INT PRIMARY KEY,
+//         course_name VARCHAR(30) NOT NULL,
+//         student_id INT,
+//         FOREIGN KEY (student_id) REFERENCES student(id)
+//     );
+//     INSERT INTO student (id,name,age) VALUES (1,'john',23),(2,'rafay',34),(3,'bilal',44);
+//     INSERT INTO course (id,course_name,student_id) VALUES(1,'PHP',1),(2,'JAVA',2),(3,'JS',1);
+// SELECT * FROM student as s RIGHT JOIN course as c ON s.id = c.student_id;
+// FULL JOIN
+// return all records from the left table and right table
+// EXAMPLE
+// CREATE TABLE student(
+//     id INT PRIMARY KEY,
+//     name VARCHAR(50),
+//     age INT NOT NULL);
+//     CREATE TABLE course(
+//         id INT PRIMARY KEY,
+//         course_name VARCHAR(30) NOT NULL,
+//         student_id INT,
+//         FOREIGN KEY (student_id) REFERENCES student(id)
+//     );
+//     INSERT INTO student (id,name,age) VALUES (1,'john',23),(2,'rafay',34),(3,'bilal',44);
+//     INSERT INTO course (id,course_name,student_id) VALUES(1,'PHP',1),(2,'JAVA',2),(3,'JS',1);
+// SELECT * FROM student as s LEFT JOIN course as c ON s.id = c.student_id
+// UNION 
+// SELECT * FROM student as s RIGHT JOIN course as c ON s.id = c.student_id;
+// <----------------------------------------------- Join in Sql ------------------------------------------------------------------------>
+// <-----------------------------------------------  Data Base ------------------------------------------------------------------------>
